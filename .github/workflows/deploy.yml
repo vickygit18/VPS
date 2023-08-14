@@ -37,8 +37,8 @@ jobs:
       
       - name: Copy Files to Server
         run: |
-          scp -i /root/.ssh/id_rsa -r * ubuntu@3.6.41.21:/var/www/html
+          sudo scp -i /root/.ssh/id_rsa -r * ubuntu@3.6.41.21:/var/www/html
 
       - name: SSH into Server and Deploy
         run: |
-          ssh -i /root/.ssh/id_rsa ubuntu@3.6.41.21 'bash -s' < deploy-script.sh
+          sudo ssh -i /root/.ssh/id_rsa ubuntu@3.6.41.21 'bash -s' < deploy-script.sh
