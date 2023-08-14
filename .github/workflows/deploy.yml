@@ -34,10 +34,10 @@ jobs:
           sed -i "s/username_here/admin/" wp-config.php
           sed -i "s/password_here/Admin@server321/" wp-config.php
           sed -i "s/localhost/3.6.41.21/" wp-config.php
-      
+
       - name: Copy Files to Server
         run: |
-          sudo scp -i /root/.ssh/id_rsa -r * ubuntu@3.6.41.21:/var/www/html
+          sudo scp -i /root/.ssh/id_rsa -r * ubuntu@3.6.41.21:/var/www/html/
 
       - name: SSH into Server and Deploy
         run: |
