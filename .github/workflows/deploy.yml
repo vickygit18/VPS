@@ -37,7 +37,7 @@ jobs:
       
       - name: Copy Files to Server
         run: |
-          scp -i /root/.ssh/id_rsa -r -v * ubuntu@3.6.41.21:/var/www/html
+          scp -i /root/.ssh/id_rsa -r -v . ubuntu@3.6.41.21:/var/www/html
 
       - name: SSH into Server and Deploy
         run: |
