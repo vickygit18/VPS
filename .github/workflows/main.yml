@@ -1,0 +1,45 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx mysql-server php php-fpm php-curl php-mysql php-gd php-mbstring php-xml php-imagick php-zip php-xmlrpc
+          # Other dependency installation commands
+
+      - name: Build Project
+        run: |
+          # Download and extract WordPress
+          wget https://wordpress.org/latest.tar.gz
+          tar -zxvf latest.tar.gz
+          rm latest.tar.gz
+          
+          # Configure WordPress
+          mv wordpress/* .
+          rm -r wordpress
+          cp wp-config-sample.php wp-config.php
+          sed -i "s/database_name_here/wordpress/" wp-config.php
+          sed -i "s/username_here/admin/" wp-config.php
+          sed -i "s/password_here/Admin@server321/" wp-config.php
+          sed -i "s/localhost/3.6.41.21/" wp-config.php
+
+      - name: Copy Files to Server
+        run: |
+          sudo scp -i /root/.ssh/id_rsa -r * ubuntu@3.6.41.21:/var/www/html/
+
+      - name: SSH into Server and Deploy
+        run: |
+          sudo ssh -i /root/.ssh/id_rsa ubuntu@3.6.41.21 'bash -s' < deploy-script.sh
+
