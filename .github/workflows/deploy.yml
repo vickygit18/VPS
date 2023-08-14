@@ -42,3 +42,4 @@ jobs:
       - name: SSH into Server and Deploy
         run: |
           ssh -i /root/.ssh/id_rsa ubuntu@13.232.237.186 'bash -s' < deploy-script.sh
+        
